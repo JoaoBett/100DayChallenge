@@ -75,4 +75,3 @@ while blackjack_start == "y":
 else:
     print("The game has ended. Goodbye\n")
     input("Press any key to continue...\n")
-    
