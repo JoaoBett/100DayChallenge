@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
 import random
+import json
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 letters=['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z']
 numbers=[1,2,3,4,5,6,7,8,9,0]
@@ -24,19 +25,37 @@ def save():
     website = website_button.get()
     email = email_user_input.get()
     password = password_input.get()
+    new_data = {
+        website:{
+            "email":email,
+            "password": password
+        }
+    }
 
     if len(website) == 0 or len(password) == 0:
-        messagebox.showinfo(title="Error", message="Please make sure you haven't left any field empty.")
+            messagebox.showinfo(title="Error", message="Please make sure you haven't left any field empty.")
     else:
-        isOk = messagebox.askokcancel(title=website, message=f"There are the details entered: \nEmail: {email}"
-                                                    f"\nPassword {password} \nIs it ok to save?")
+        with open("Day028/data.json", "r") as data_file:
+            #adds on a json
+            #need to change the way we use the function with open("asdad", "")
+            #json.dump(new_data, data_file, indent=4)
 
-        if isOk:
-            with open("Day028/data.txt", "a") as data_file:
-                data_file.write(f"{website} | {email} | {password}\n")
-                website_button.delete(0,END)
-                email_user_input.delete(0,END)
-                password_input.delete(0,END)
+            #read from the file
+            #need to change the way we use the function with open("asdad", "r")
+            #json.load(data_file)
+
+            #reading old data
+            data = json.load(data_file)
+            #updating the old data with new data
+            data.update(new_data)
+
+        with open("Day028/data.json", "w") as data_file:
+            #saving updated data
+            json.dump(data, data_file, indent=4)
+
+            website_button.delete(0,END)
+            email_user_input.delete(0,END)
+            password_input.delete(0,END)
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
