@@ -32,27 +32,24 @@ def save():
         }
     }
 
+
     if len(website) == 0 or len(password) == 0:
             messagebox.showinfo(title="Error", message="Please make sure you haven't left any field empty.")
     else:
-        with open("Day028/data.json", "r") as data_file:
-            #adds on a json
-            #need to change the way we use the function with open("asdad", "")
-            #json.dump(new_data, data_file, indent=4)
+        try:
+            with open("Day028/data.json", "r") as data_file:
+                data = json.load(data_file)
+                
+        except FileNotFoundError:
+             with open("Day028/data.json", "w") as data_file:
+                  json.dump(data, data_file, indent=4)
 
-            #read from the file
-            #need to change the way we use the function with open("asdad", "r")
-            #json.load(data_file)
-
-            #reading old data
-            data = json.load(data_file)
-            #updating the old data with new data
+        else: 
             data.update(new_data)
+            with open("Day028/data.json", "w") as data_file:
+                json.dump(data, data_file, indent=4)
 
-        with open("Day028/data.json", "w") as data_file:
-            #saving updated data
-            json.dump(data, data_file, indent=4)
-
+        finally:
             website_button.delete(0,END)
             email_user_input.delete(0,END)
             password_input.delete(0,END)
@@ -98,3 +95,27 @@ add.grid(row=4,column=1, columnspan=2)
 
 
 window.mainloop()
+
+
+
+# with open("Day028/data.json", "r") as data_file:
+#                 #adds on a json
+#                 #need to change the way we use the function with open("asdad", "")
+#                 #json.dump(new_data, data_file, indent=4)
+
+#                 #read from the file
+#                 #need to change the way we use the function with open("asdad", "r")
+#                 #json.load(data_file)
+
+#                 #reading old data
+#                 data = json.load(data_file)
+#                 #updating the old data with new data
+#                 data.update(new_data)
+
+#         with open("Day028/data.json", "w") as data_file:
+#             #saving updated data
+#             json.dump(data, data_file, indent=4)
+
+#             website_button.delete(0,END)
+#             email_user_input.delete(0,END)
+#             password_input.delete(0,END)
