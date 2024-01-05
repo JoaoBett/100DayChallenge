@@ -53,6 +53,24 @@ def save():
             website_button.delete(0,END)
             email_user_input.delete(0,END)
             password_input.delete(0,END)
+# ---------------------------- SEARCH WEBSITE ------------------------------- #
+def search():
+    website = website_button.get()
+
+    if len(website) == 0:
+            messagebox.showinfo(title="Error", message="Please make sure you haven't left any field empty.")
+    try:
+        with open("Day028/data.json", "r") as data_file:
+             data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showerror("No Data File found.")
+    else:
+        if website in data:
+            email = data[website]["email"]
+            password = data[website]["password"]
+            messagebox.showinfo(title="Credentials", message=f"Website: {website}\nEmail: {email}\nPassword: {password}")
+        else:
+            messagebox.showerror("That website doesn't have any credentials.")
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = Tk()
@@ -68,8 +86,8 @@ canvas.grid(column=1, row=0)
 website_label = Label(text="Website:")
 website_label.grid(column=0, row=1)
 
-website_button = Entry(width=35)
-website_button.grid(column=1, row=1, columnspan=2)
+website_button = Entry(width=28)
+website_button.grid(column=1, row=1, columnspan=2, sticky=W)
 website_button.focus()
 #User or Email
 email_user_label = Label(text="Email/Username:")
@@ -83,7 +101,7 @@ email_user_input.insert(0, "myemail@gmail.com")
 password_label = Label(text="Password:")
 password_label.grid(column=0, row=3)
 
-password_input = Entry(width=30)
+password_input = Entry(width=35)
 password_input.grid(column=1, row=3, sticky=W)
 
 generate_password = Button(text="Generate Password", command=pass_gen)
@@ -92,6 +110,10 @@ generate_password.grid(column=1, row=3, sticky=E)
 #Add
 add = Button(text="Add", width=30, command=save)
 add.grid(row=4,column=1, columnspan=2)
+
+#search
+search = Button(text="Search", command=search)
+search.grid(row=1, column=3, sticky=W)
 
 
 window.mainloop()
