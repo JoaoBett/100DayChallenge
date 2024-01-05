@@ -70,10 +70,8 @@ password_label.grid(column=0, row=3)
 password_input = Entry(width=30)
 password_input.grid(column=1, row=3, sticky=W)
 
-
 generate_password = Button(text="Generate Password", command=pass_gen)
 generate_password.grid(column=1, row=3, sticky=E)
-#falta colocar o command
 
 #Add
 add = Button(text="Add", width=30, command=save)
